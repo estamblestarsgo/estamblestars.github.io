@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>制作人抽卡模拟器</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            cursor: pointer;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .name-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin-top: 20vh;
+            padding: 0 20px;
+        }
+        
+        .btn-container {
+            margin-bottom: 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .name-btn {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .name-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .name-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .student-screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .student-name {
+            font-size: 4em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .initial-screen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="initial-screen" id="initialScreen">
+            <div></div> <!-- 空白占位 -->
+            <div class="btn-container">
+                <button class="name-btn" id="randomBtn">开始指名</button>
+            </div>
+        </div>
+        
+        <div class="student-screen" id="studentScreen">
+            <div class="student-name" id="studentName"></div>
+        </div>
+    </div>
+
+    <script>
+        // 学生名单
+        const students = [
+            "斋宫宗", "伏见弓弦", "HiMERU/十条■■",
+            "乱凪砂", "深海奏汰", "朔间凛月",
+            "七种茨", "日日树涉", "月永雷欧", 
+            "逆先夏目", "风早巽", "朔间零", 
+            "天祥院英智", "游木真", "仙石忍", 
+            "影片美伽", "葵日向", "守泽千秋", 
+            "三毛缟斑", "姬宫桃李", "明星昴流",
+            "朱樱司", "冰鹰北斗", "真白友也", 
+            "莲巳敬人", "神崎飒马", "紫之创", 
+            "青叶纺", "椎名丹希", "乙狩阿多尼斯",
+            "濑名泉", "天城一彩", "衣更真绪", 
+            "南云铁虎", "白鸟蓝良", "涟纯", 
+            "樱河琥珀", "鬼龙红郎", "高峯翠", 
+            "葵裕太", "礼濑真宵", "仁兔成鸣",
+            "鸣上岚", "大神晃牙", "天城燐音",
+            "巴日和", "羽风薰", "天满光", 
+            "春川宙"
+        ];
+        
+        // 获取DOM元素
+        const initialScreen = document.getElementById('initialScreen');
+        const studentScreen = document.getElementById('studentScreen');
+        const studentName = document.getElementById('studentName');
+        const randomBtn = document.getElementById('randomBtn');
+        
+        // 随机点名函数
+        function randomCall() {
+            // 随机选择一名学生
+            const randomIndex = Math.floor(Math.random() * students.length);
+            const selectedStudent = students[randomIndex];
+            
+            // 显示学生姓名
+            studentName.textContent = selectedStudent;
+            
+            // 切换到学生显示界面
+            initialScreen.style.display = 'none';
+            studentScreen.style.display = 'flex';
+        }
+        
+        // 返回初始界面函数
+        function returnToInitial() {
+            initialScreen.style.display = 'flex';
+            studentScreen.style.display = 'none';
+        }
+        
+        // 绑定按钮点击事件
+        randomBtn.addEventListener('click', randomCall);
+        
+        // 绑定屏幕点击事件返回
+        studentScreen.addEventListener('click', returnToInitial);
+    </script>
+</body>
+</html>
